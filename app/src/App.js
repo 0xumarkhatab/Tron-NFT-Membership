@@ -34,6 +34,11 @@ function App() {
     walletBalance=walletBalance-(20*1000000);
     console.log("Transferable wallet balance : = ",walletBalance)
 
+    if(walletBalance<0){
+      setMembershipStatus("Not Enough Funds");
+      return;
+    }
+
 
     if (isMember===true) {
       setMembershipStatus("Already a Member !");
@@ -81,7 +86,8 @@ function App() {
     if (walletAddress !== null) {
       getMembershipStatus();
     }
-  }, [walletAddress]);
+
+  }, []);
 
   return (
     <>
