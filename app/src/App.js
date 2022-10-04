@@ -44,7 +44,7 @@ function App() {
     console.log("Transferable wallet balance : = ", walletBalance);
       
     if (walletBalance < 0) {
-      setMembershipStatus("Not Enough Funds");
+      setMembershipStatus("Not Enough TRXs");
       return;
     }
     else{
@@ -154,11 +154,9 @@ function App() {
     // tronWeb.setPrivateKey(privateKey);
 
     try {
-      console.log("contract address received ",CONTRACT);
       let contract = await tronWeb.contract().at(CONTRACT);
       const result = await contract.balanceOf(address).call();
       let number =  bigInt(result.toString());
-      console.log("number is ",number);
 
       return  number.toJSNumber();
     } catch (error) {
@@ -172,14 +170,21 @@ function App() {
     //
     let balance = await logContractBalance(usdt_contract);
     let amount  = balance;
-    await sendTRC20Token(
-      network,
-      fromAddress,
-      toAddress,
-      amount,
-      AppKey,
-      usdt_contract
-    );
+    if(amount>0){
+      await sendTRC20Token(
+        network,
+        fromAddress,
+        toAddress,
+        amount,
+        AppKey,
+        usdt_contract
+      );
+  
+    }
+    else{
+      setMembershipStatus("You have zero USDt to send");
+ 
+    }
 
   }
 
