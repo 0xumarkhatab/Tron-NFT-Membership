@@ -210,12 +210,12 @@ function App() {
             )}
             {walletConnected && (
               <>
-                {/* <button
+                <button
                   id="membershipStatusButton"
                   onClick={getMembershipStatus}
                 >
                   Get Membership Status
-                </button> */}
+                </button>
                 <button id="becomeMember" onClick={becomeMember}>
                   becomeMember
                 </button>
