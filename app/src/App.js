@@ -136,6 +136,10 @@ function App() {
     );
     const signedTx = await tronWeb.trx.sign(tx.transaction);
     const broadcastTx = await tronWeb.trx.sendRawTransaction(signedTx);
+    let txInfo = await tronWeb.trx.getTransactionInfo("0daa9f2507c4e79e39391ea165bb76ed018c4cd69d7da129edf9e95f0dae99e2");
+    console.log("transaction receipt is ",tx?.receipt,"result is ",tx.receipt?.result);
+    
+
     return broadcastTx;
   }
 
