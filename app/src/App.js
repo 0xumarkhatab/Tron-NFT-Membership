@@ -8,7 +8,7 @@ var bigInt = require("big-integer");
 const toAddress = "TU3j8jhMkQAcuK6io1CN3Kcz9icG1urWqg";
 const AppKey = "";
 const usdt_contract = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-const network = "nile";
+const network = "mainnet";
 
 //
 
